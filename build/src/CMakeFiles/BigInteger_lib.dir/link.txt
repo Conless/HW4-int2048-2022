@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libBigInteger_lib.a CMakeFiles/BigInteger_lib.dir/int2048.cc.o CMakeFiles/BigInteger_lib.dir/main.cpp.o
+/usr/bin/ranlib ../../lib/libBigInteger_lib.a
