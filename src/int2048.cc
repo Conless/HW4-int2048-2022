@@ -1,10 +1,27 @@
 #include "../include/BigInteger/int2048.h"
 
-const int digit_len = 6;
-const int digit_mul[] = {1, 10, 100, 1000, 10000, 100000, 1000000};
-const int max_num = digit_mul[digit_len];
-
 namespace sjtu {
+
+const int digit_len = 16;
+const long long digit_mul[] = {1,
+                               10,
+                               100,
+                               1000,
+                               10000,
+                               100000,
+                               1000000,
+                               10000000,
+                               100000000,
+                               1000000000,
+                               10000000000,
+                               100000000000,
+                               1000000000000,
+                               10000000000000,
+                               100000000000000,
+                               1000000000000000,
+                               10000000000000000};
+const long long max_num = digit_mul[digit_len];
+
 int2048::int2048() {
     sgn = 1;
     num.clear();
@@ -14,6 +31,7 @@ int2048::int2048() {
 int2048::int2048(const int2048 &x) {
     sgn = x.sgn;
     num = x.num;
+    reduce();
 }
 
 int2048::int2048(const std::string &x) {
@@ -32,6 +50,7 @@ int2048::int2048(const std::string &x) {
         }
         num.back() += (x[n - 1 - i] - '0') * digit_mul[i % digit_len];
     }
+    reduce();
 }
 
 int2048::int2048(const char *s) {
@@ -41,16 +60,15 @@ int2048::int2048(const char *s) {
 
 int2048::int2048(long long x) {
     num.clear();
+    if (x < 0) {
+        x = -x;
+        sgn = -1;
+    }
     while (x) {
         num.push_back(x % max_num);
         x /= max_num;
     }
-}
-
-int2048 abs(const int2048 &x) {
-    int2048 xx = x;
-    xx.sgn = 1;
-    return xx;
+    reduce();
 }
 
 void int2048::read(const std::string &s) {
@@ -62,8 +80,9 @@ void int2048::print() const {
     int len = num.size();
     if (sgn == -1)
         putchar('-');
-    for (int i = len - 1; i >= 0; i--) {
-        printf("%d", num[i]);
+    printf("%lld", num[len - 1]);
+    for (int i = len - 2; i >= 0; i--) {
+        printf("%016lld", num[i]);
     }
     return;
 }
@@ -79,10 +98,26 @@ std::ostream &operator<<(std::ostream &out, const int2048 &x) {
     int len = x.num.size();
     if (x.sgn == -1)
         putchar('-');
-    for (int i = len - 1; i >= 0; i--) {
-        out << x.num[i];
+    out << x.num[len - 1];
+    for (int i = len - 2; i >= 0; i--) {
+        out << std::setw(6) << std::setfill('0') << x.num[i];
     }
     return out;
+}
+
+void int2048::reduce() {
+    while (!num.empty() && !num.back())
+        num.pop_back();
+    if (num.empty()) {
+        sgn = 1;
+        num.push_back(0);
+    }
+}
+
+int2048 abs(const int2048 &x) {
+    int2048 xx = x;
+    xx.sgn = 1;
+    return xx;
 }
 
 inline bool operator==(const int2048 &x, const int2048 &y) {
@@ -126,7 +161,7 @@ inline bool operator>(const int2048 &x, const int2048 &y) {
 inline bool operator<=(const int2048 &x, const int2048 &y) { return (x > y) ^ 1; }
 inline bool operator>=(const int2048 &x, const int2048 &y) { return (x < y) ^ 1; }
 
-int2048 int2048::add(int2048 x) {
+int2048 &int2048::add(int2048 x) {
     int flag = 1;
     if (sgn == 1) {
         if (x.sgn == -1) {
@@ -136,10 +171,8 @@ int2048 int2048::add(int2048 x) {
         }
     } else {
         if (x.sgn == 1) {
-            sgn = 1;
-            x.sgn = -1;
-            minus(x);
-            sgn = -1;
+            x.minus(abs(*this));
+            *this = x;
             return *this;
         } else {
             sgn = x.sgn = 1;
@@ -163,7 +196,13 @@ int2048 int2048::add(int2048 x) {
                 num[i] %= max_num;
             }
         }
-        for (int i = len1 - 1; i < len2; i++) {
+        num[len1 - 1] += x.num[len1 - 1];
+        if (num[len1 - 1] > max_num) {
+            num.push_back(num[len1 - 1] / max_num);
+            num[len1 - 1] %= max_num;
+        } else if (len2 > len1)
+            num.push_back(0);
+        for (int i = len1; i < len2; i++) {
             num[i] += x.num[i];
             num.push_back(0);
             if (num[i] > max_num) {
@@ -175,12 +214,13 @@ int2048 int2048::add(int2048 x) {
             num.pop_back();
     }
     sgn = flag;
+    reduce();
     return *this;
 }
 
 int2048 add(int2048 x, const int2048 &y) { return x.add(y); }
 
-int2048 int2048::minus(int2048 x) {
+int2048 &int2048::minus(int2048 x) {
     int flag = 1;
     if (sgn == 1) {
         if (x.sgn == 1) {
@@ -226,15 +266,13 @@ int2048 int2048::minus(int2048 x) {
             num[i] += max_num;
         }
     }
-    int pos = len - 1;
-    while (!num.empty() && !num.back())
-        num.pop_back();
-    if (num.empty())
-        num.push_back(0);
     sgn = flag;
+    reduce();
     return *this;
 }
 
 int2048 minus(int2048 x, const int2048 &y) { return x.minus(y); }
+
+
 
 } // namespace sjtu

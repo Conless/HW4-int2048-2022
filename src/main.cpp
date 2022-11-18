@@ -1,15 +1,27 @@
-#include "../include/BigInteger/int2048.h"
+/*
+Time: 2021-10-20
+Test: add & minus (signed)
+std Time: 0.15s
+Time Limit: 1.00s
+*/
 
-using sjtu::int2048;
-using std::cin;
-using std::cout;
+#include "BigInteger/int2048.h"
 
-int main() {
-    while (true) {
-        int2048 a, b;
-        cin >> a >> b;
-        a.minus(b);
-        cout << a << '\n';
+sjtu::int2048 a;
+std::string s;
+
+int main()
+{
+    int n;
+    std::cin >> n;
+    for (int i = 1; i <= n; i++)
+    {
+        std::cin >> s;
+        if (i & 1)
+            a.add(sjtu::int2048(s));
+        else
+            a.minus(sjtu::int2048(s));
+        
+        a.print(); puts("");
     }
-    return 0;
 }

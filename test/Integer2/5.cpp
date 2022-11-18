@@ -1,11 +1,11 @@
 /*
 Time: 2021-10-20
 Test: add & minus (signed)
-std Time: 0.15s
+std Time: 0.14s
 Time Limit: 1.00s
 */
 
-#include "int2048.hpp"
+#include "BigInteger/int2048.h"
 
 sjtu::int2048 a;
 std::string s;
@@ -18,10 +18,10 @@ int main()
     {
         std::cin >> s;
         if (i & 1)
-            a.add(sjtu::int2048(s));
+            a += s;
         else
-            a.minus(sjtu::int2048(s));
+            a -= s;
         
-        a.print(); puts("");
+        std::cout << a << '\n';
     }
 }

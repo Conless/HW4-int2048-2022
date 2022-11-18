@@ -5,7 +5,7 @@ std Time: 0.31s
 Time Limit: 2.00s
 */
 
-#include "int2048.hpp"
+#include "BigInteger/int2048.h"
 
 sjtu::int2048 a, b;
 
