@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../lib/libint2048_lib.a CMakeFiles/int2048_lib.dir/int2048.cc.o CMakeFiles/int2048_lib.dir/main.cpp.o
-/usr/bin/ranlib ../../lib/libint2048_lib.a

@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/int2048_run.dir/int2048.cc.o CMakeFiles/int2048_run.dir/main.cpp.o -o ../../bin/int2048_run 
