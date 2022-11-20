@@ -85,6 +85,51 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
 	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/src//CMakeFiles/progress.marks
@@ -117,40 +162,40 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-src/CMakeFiles/bigint.dir/rule:
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/bigint.dir/rule
-.PHONY : src/CMakeFiles/bigint.dir/rule
+src/CMakeFiles/int2048_run.dir/rule:
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/int2048_run.dir/rule
+.PHONY : src/CMakeFiles/int2048_run.dir/rule
 
 # Convenience name for target.
-bigint: src/CMakeFiles/bigint.dir/rule
-.PHONY : bigint
+int2048_run: src/CMakeFiles/int2048_run.dir/rule
+.PHONY : int2048_run
 
 # fast build rule for target.
-bigint/fast:
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bigint.dir/build.make src/CMakeFiles/bigint.dir/build
-.PHONY : bigint/fast
+int2048_run/fast:
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_run.dir/build.make src/CMakeFiles/int2048_run.dir/build
+.PHONY : int2048_run/fast
 
 # Convenience name for target.
-src/CMakeFiles/BigInteger_lib.dir/rule:
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/BigInteger_lib.dir/rule
-.PHONY : src/CMakeFiles/BigInteger_lib.dir/rule
+src/CMakeFiles/int2048_lib.dir/rule:
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/int2048_lib.dir/rule
+.PHONY : src/CMakeFiles/int2048_lib.dir/rule
 
 # Convenience name for target.
-BigInteger_lib: src/CMakeFiles/BigInteger_lib.dir/rule
-.PHONY : BigInteger_lib
+int2048_lib: src/CMakeFiles/int2048_lib.dir/rule
+.PHONY : int2048_lib
 
 # fast build rule for target.
-BigInteger_lib/fast:
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/BigInteger_lib.dir/build.make src/CMakeFiles/BigInteger_lib.dir/build
-.PHONY : BigInteger_lib/fast
+int2048_lib/fast:
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_lib.dir/build.make src/CMakeFiles/int2048_lib.dir/build
+.PHONY : int2048_lib/fast
 
 int2048.o: int2048.cc.o
 .PHONY : int2048.o
 
 # target to build an object file
 int2048.cc.o:
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bigint.dir/build.make src/CMakeFiles/bigint.dir/int2048.cc.o
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/BigInteger_lib.dir/build.make src/CMakeFiles/BigInteger_lib.dir/int2048.cc.o
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_run.dir/build.make src/CMakeFiles/int2048_run.dir/int2048.cc.o
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_lib.dir/build.make src/CMakeFiles/int2048_lib.dir/int2048.cc.o
 .PHONY : int2048.cc.o
 
 int2048.i: int2048.cc.i
@@ -158,8 +203,8 @@ int2048.i: int2048.cc.i
 
 # target to preprocess a source file
 int2048.cc.i:
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bigint.dir/build.make src/CMakeFiles/bigint.dir/int2048.cc.i
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/BigInteger_lib.dir/build.make src/CMakeFiles/BigInteger_lib.dir/int2048.cc.i
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_run.dir/build.make src/CMakeFiles/int2048_run.dir/int2048.cc.i
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_lib.dir/build.make src/CMakeFiles/int2048_lib.dir/int2048.cc.i
 .PHONY : int2048.cc.i
 
 int2048.s: int2048.cc.s
@@ -167,8 +212,8 @@ int2048.s: int2048.cc.s
 
 # target to generate assembly for a file
 int2048.cc.s:
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bigint.dir/build.make src/CMakeFiles/bigint.dir/int2048.cc.s
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/BigInteger_lib.dir/build.make src/CMakeFiles/BigInteger_lib.dir/int2048.cc.s
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_run.dir/build.make src/CMakeFiles/int2048_run.dir/int2048.cc.s
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_lib.dir/build.make src/CMakeFiles/int2048_lib.dir/int2048.cc.s
 .PHONY : int2048.cc.s
 
 main.o: main.cpp.o
@@ -176,8 +221,8 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bigint.dir/build.make src/CMakeFiles/bigint.dir/main.cpp.o
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/BigInteger_lib.dir/build.make src/CMakeFiles/BigInteger_lib.dir/main.cpp.o
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_run.dir/build.make src/CMakeFiles/int2048_run.dir/main.cpp.o
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_lib.dir/build.make src/CMakeFiles/int2048_lib.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -185,8 +230,8 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bigint.dir/build.make src/CMakeFiles/bigint.dir/main.cpp.i
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/BigInteger_lib.dir/build.make src/CMakeFiles/BigInteger_lib.dir/main.cpp.i
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_run.dir/build.make src/CMakeFiles/int2048_run.dir/main.cpp.i
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_lib.dir/build.make src/CMakeFiles/int2048_lib.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -194,8 +239,8 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/bigint.dir/build.make src/CMakeFiles/bigint.dir/main.cpp.s
-	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/BigInteger_lib.dir/build.make src/CMakeFiles/BigInteger_lib.dir/main.cpp.s
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_run.dir/build.make src/CMakeFiles/int2048_run.dir/main.cpp.s
+	cd /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/int2048_lib.dir/build.make src/CMakeFiles/int2048_lib.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -205,9 +250,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... BigInteger_lib"
-	@echo "... bigint"
+	@echo "... int2048_lib"
+	@echo "... int2048_run"
 	@echo "... int2048.o"
 	@echo "... int2048.i"
 	@echo "... int2048.s"

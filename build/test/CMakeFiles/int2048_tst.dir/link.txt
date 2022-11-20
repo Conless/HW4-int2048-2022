@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/int2048_tst.dir/test.cpp.o -o ../../bin/tst/int2048_tst  ../../lib/libint2048_lib.a ../lib/libgtest.a 

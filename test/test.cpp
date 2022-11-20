@@ -1,12 +1,15 @@
-#include <iostream>
+#include "gtest/gtest.h"
+#include "int2048/int2048.h"
 
 using namespace std;
 
-sjtu::int2048 a, b;
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
 
-int main()
-{
+TEST(SuiteName, TestName1) {
+    sjtu::int2048 a, b;
     cin >> a >> b;
     cout << a / b << endl;
-    return 0;
 }

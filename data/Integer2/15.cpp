@@ -6,7 +6,7 @@ std Time: 0.05s
 Time Limit: 1.00s
 */
 
-#include "BigInteger/int2048.h"
+#include "int2048/int2048.h"
 
 sjtu::int2048 a, b;
 std::string s1, s2;
