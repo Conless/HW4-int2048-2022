@@ -94,22 +94,6 @@ const long long digit_mul[] = {1, 10, 100, 1000, 10000, 100000, 1000000, 1000000
 const long long max_num = digit_mul[digit_len];
 const int2048 max_num_int2048 = max_num;
 
-// #define double long double
-
-// class complex {
-//     double a, b;
-//     public:
-//     complex() : a(0), b(0) {}
-//     complex(double a) : a(a), b(0) {}
-//     complex(double a, double b) : a(a), b(b) {}
-//     complex(const complex &x) { a = x.a, b = x.b; }
-//     complex operator+(const complex &x) { return complex(a + x.a, b + x.b);  }
-//     complex operator-(const complex &x) { return complex(a - x.a, b - x.b);  }
-//     complex operator*(const complex &x) { return complex(a * x.a - b * x.b, a * x.b + b * x.a); }
-//     double real() { return a; }
-//     double real(double x) { return a = x;  }
-// };
-
 #define complex std::complex<double>
 
 int2048::int2048() {
