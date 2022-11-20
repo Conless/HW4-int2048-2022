@@ -31,9 +31,6 @@ default_target: all
 
 .SUFFIXES: .hpux_make_needs_suffix_list
 
-# Produce verbose output by default.
-VERBOSE = 1
-
 # Command-line flag to silence nested $(MAKE).
 $(VERBOSE)MAKESILENT = -s
 
@@ -60,17 +57,17 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles/CMakeTmp
+CMAKE_SOURCE_DIR = /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles/CMakeTmp
+CMAKE_BINARY_DIR = /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build
 
 #=============================================================================
 # Targets provided globally by CMake.
 
 # Special rule for the target edit_cache
 edit_cache:
-	@echo "No interactive CMake dialog available..."
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
 	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
@@ -80,7 +77,7 @@ edit_cache/fast: edit_cache
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
-	@echo "Running CMake to regenerate build system..."
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
 	/usr/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
@@ -89,10 +86,10 @@ rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
 # The main all target
-all:
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles/CMakeTmp/CMakeFiles /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles/CMakeTmp//CMakeFiles/progress.marks
+all: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles/CMakeTmp/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -114,58 +111,58 @@ preinstall/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall/fast
 
+# clear depends
+depend:
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+.PHONY : depend
+
 #=============================================================================
-# Target rules for targets named cmTC_4c1b4
+# Target rules for targets named bigint
 
 # Build rule for target.
-cmTC_4c1b4:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmTC_4c1b4
-.PHONY : cmTC_4c1b4
+bigint: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bigint
+.PHONY : bigint
 
 # fast build rule for target.
-cmTC_4c1b4/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cmTC_4c1b4.dir/build.make CMakeFiles/cmTC_4c1b4.dir/build
-.PHONY : cmTC_4c1b4/fast
+bigint/fast:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/bigint.dir/build.make src/CMakeFiles/bigint.dir/build
+.PHONY : bigint/fast
 
-CMakeCCompilerABI.o: CMakeCCompilerABI.c.o
-.PHONY : CMakeCCompilerABI.o
+#=============================================================================
+# Target rules for targets named BigInteger_lib
 
-# target to build an object file
-CMakeCCompilerABI.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cmTC_4c1b4.dir/build.make CMakeFiles/cmTC_4c1b4.dir/CMakeCCompilerABI.c.o
-.PHONY : CMakeCCompilerABI.c.o
+# Build rule for target.
+BigInteger_lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BigInteger_lib
+.PHONY : BigInteger_lib
 
-CMakeCCompilerABI.i: CMakeCCompilerABI.c.i
-.PHONY : CMakeCCompilerABI.i
-
-# target to preprocess a source file
-CMakeCCompilerABI.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cmTC_4c1b4.dir/build.make CMakeFiles/cmTC_4c1b4.dir/CMakeCCompilerABI.c.i
-.PHONY : CMakeCCompilerABI.c.i
-
-CMakeCCompilerABI.s: CMakeCCompilerABI.c.s
-.PHONY : CMakeCCompilerABI.s
-
-# target to generate assembly for a file
-CMakeCCompilerABI.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cmTC_4c1b4.dir/build.make CMakeFiles/cmTC_4c1b4.dir/CMakeCCompilerABI.c.s
-.PHONY : CMakeCCompilerABI.c.s
+# fast build rule for target.
+BigInteger_lib/fast:
+	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/BigInteger_lib.dir/build.make src/CMakeFiles/BigInteger_lib.dir/build
+.PHONY : BigInteger_lib/fast
 
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
+	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... cmTC_4c1b4"
-	@echo "... CMakeCCompilerABI.o"
-	@echo "... CMakeCCompilerABI.i"
-	@echo "... CMakeCCompilerABI.s"
+	@echo "... BigInteger_lib"
+	@echo "... bigint"
 .PHONY : help
 
 
 
 #=============================================================================
 # Special targets to cleanup operation of make.
+
+# Special rule to run CMake to check the build system integrity.
+# No rule that depends on this can have commands that come from listfiles
+# because they might be regenerated.
+cmake_check_build_system:
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+.PHONY : cmake_check_build_system
 

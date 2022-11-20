@@ -1,3 +1,0 @@
-/mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles/CMakeTmp/CMakeFiles/cmTC_4c1b4.dir
-/mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles/CMakeTmp/CMakeFiles/edit_cache.dir
-/mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles/CMakeTmp/CMakeFiles/rebuild_cache.dir

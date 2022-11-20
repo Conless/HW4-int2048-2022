@@ -24,7 +24,7 @@
 #     echo "Succeed on Integer 1"
 # fi
 flag=0
-for ((var = 6 ; $var <= 18; var++))
+for ((var = 1 ; $var <= 18; var++))
 do
     FILENAME='data/Integer2/'$var
     cp $FILENAME.cpp src/main.cpp
@@ -35,7 +35,7 @@ do
     DIFF=$(diff test.out $FILENAME.out)
     if ["$DIFF" == ""]
     then
-        echo "Answer correct on testdata Integer 1/"$var"."
+        echo "Answer correct on testdata Integer 2/"$var"."
     else
         flag=1
     fi

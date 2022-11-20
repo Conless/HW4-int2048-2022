@@ -45,19 +45,19 @@ class int2048 {
     friend int2048 abs(const int2048 &);
 
   public:
-    inline friend bool operator==(const int2048 &, const int2048 &);
-    inline friend bool operator!=(const int2048 &, const int2048 &);
-    inline friend bool operator<(const int2048 &, const int2048 &);
-    inline friend bool operator>(const int2048 &, const int2048 &);
-    inline friend bool operator<=(const int2048 &, const int2048 &);
-    inline friend bool operator>=(const int2048 &, const int2048 &);
+    friend bool operator==(const int2048 &, const int2048 &);
+    friend bool operator!=(const int2048 &, const int2048 &);
+    friend bool operator<(const int2048 &, const int2048 &);
+    friend bool operator>(const int2048 &, const int2048 &);
+    friend bool operator<=(const int2048 &, const int2048 &);
+    friend bool operator>=(const int2048 &, const int2048 &);
 
     // add a big int
     int2048 &add(int2048);
     // output the sum of a big int
     friend int2048 add(int2048, const int2048 &);
 
-    int2048 &operator+=(const int2048 &);
+    int2048 &operator+=(int2048);
     friend int2048 operator+(int2048, const int2048 &);
 
     // minus a big int
@@ -65,18 +65,19 @@ class int2048 {
     // output the difference of a big int
     friend int2048 minus(int2048, const int2048 &);
 
-    int2048 &operator-=(const int2048 &);
+    int2048 &operator-=(int2048);
     friend int2048 operator-(int2048, const int2048 &);
 
     
-    int2048 &operator*=(const int2048 &);
+    int2048 &operator*=(int2048);
     friend int2048 operator*(int2048, const int2048 &);
 
-    int2048 &operator/=(const int2048 &);
+    int2048 &operator/=(int2048);
     friend int2048 operator/(int2048, const int2048 &);
 
-    // void shift(int);
-    // friend int2048 inv(const int2048 &);
+    void shift(int);
+    int2048 div(int2048);
+    friend int2048 inv(int2048);
 };
 } // namespace sjtu
 

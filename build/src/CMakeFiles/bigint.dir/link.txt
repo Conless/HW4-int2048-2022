@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/bigint.dir/int2048.cc.o CMakeFiles/bigint.dir/main.cpp.o -o ../../bin/bigint 
