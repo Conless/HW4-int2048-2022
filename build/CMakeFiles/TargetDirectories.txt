@@ -1,6 +1,0 @@
-/mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles/edit_cache.dir
-/mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/CMakeFiles/rebuild_cache.dir
-/mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/src/CMakeFiles/bigint.dir
-/mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/src/CMakeFiles/BigInteger_lib.dir
-/mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/src/CMakeFiles/edit_cache.dir
-/mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build/src/CMakeFiles/rebuild_cache.dir

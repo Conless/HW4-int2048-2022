@@ -1,29 +1,95 @@
-#include "BigInteger/int2048.h"
+#ifndef SJTU_BIGINTEGER
+#define SJTU_BIGINTEGER
+
+// Integer 1:
+// 实现一个有符号的大整数类，只需支持简单的加减
+
+// Integer 2:
+// 实现一个有符号的大整数类，支持加减乘除，并重载相关运算符
+
+// 请不要使用除了以下头文件之外的其它头文件
+#include <complex>
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <iomanip>
+#include <vector>
+
+// 请不要使用 using namespace std;
 
 namespace sjtu {
 
-const int digit_len = 2;
+class int2048 {
+  private:
+    int sgn;
+    std::vector<long long> num;
+
+  public:
+    // constructor functions
+    int2048();
+    int2048(const int2048 &);
+    int2048(const std::string &);
+    int2048(const char *);
+    int2048(long long x);
+
+  public:
+    // read a big int
+    void read(const std::string &);
+    // output a big int
+    void print() const;
+
+    friend std::istream &operator>>(std::istream &, int2048 &);
+    friend std::ostream &operator<<(std::ostream &, const int2048 &);
+
+  protected:
+    void reduce();
+    friend int2048 abs(const int2048 &);
+
+  public:
+    inline friend bool operator==(const int2048 &, const int2048 &);
+    inline friend bool operator!=(const int2048 &, const int2048 &);
+    inline friend bool operator<(const int2048 &, const int2048 &);
+    inline friend bool operator>(const int2048 &, const int2048 &);
+    inline friend bool operator<=(const int2048 &, const int2048 &);
+    inline friend bool operator>=(const int2048 &, const int2048 &);
+
+    // add a big int
+    int2048 &add(int2048);
+    // output the sum of a big int
+    friend int2048 add(int2048, const int2048 &);
+
+    int2048 &operator+=(int2048);
+    friend int2048 operator+(int2048, const int2048 &);
+
+    // minus a big int
+    int2048 &minus(int2048);
+    // output the difference of a big int
+    friend int2048 minus(int2048, const int2048 &);
+
+    int2048 &operator-=(int2048);
+    friend int2048 operator-(int2048, const int2048 &);
+
+    
+    int2048 &operator*=(const int2048 &);
+    friend int2048 operator*(int2048, const int2048 &);
+
+    // int2048 &operator/=(const int2048 &);
+    // friend int2048 operator/(int2048, const int2048 &);
+
+    
+};
+} // namespace sjtu
+
+
+
+
+#endif
+
+namespace sjtu {
+
+const int digit_len = 4;
 const long long digit_mul[] = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
 const long long max_num = digit_mul[digit_len];
-const int2048 max_num_int2048 = max_num;
-
-// #define double long double
-
-// class complex {
-//     double a, b;
-//     public:
-//     complex() : a(0), b(0) {}
-//     complex(double a) : a(a), b(0) {}
-//     complex(double a, double b) : a(a), b(b) {}
-//     complex(const complex &x) { a = x.a, b = x.b; }
-//     complex operator+(const complex &x) { return complex(a + x.a, b + x.b);  }
-//     complex operator-(const complex &x) { return complex(a - x.a, b - x.b);  }
-//     complex operator*(const complex &x) { return complex(a * x.a - b * x.b, a * x.b + b * x.a); }
-//     double real() { return a; }
-//     double real(double x) { return a = x;  }
-// };
-
-#define complex std::complex<double>
 
 int2048::int2048() {
     sgn = 1;
@@ -56,13 +122,16 @@ int2048::int2048(const std::string &x) {
     reduce();
 }
 
+int2048::int2048(const char *s) {
+    std::string ss = s;
+    *this = ss;
+}
+
 int2048::int2048(long long x) {
     num.clear();
     if (x < 0) {
         x = -x;
         sgn = -1;
-    } else {
-        sgn = 1;
     }
     while (x) {
         num.push_back(x % max_num);
@@ -82,7 +151,7 @@ void int2048::print() const {
         putchar('-');
     printf("%lld", num[len - 1]);
     for (int i = len - 2; i >= 0; i--) {
-        printf("%02lld", num[i]);
+        printf("%04lld", num[i]);
     }
     return;
 }
@@ -220,10 +289,6 @@ int2048 &int2048::add(int2048 x) {
 
 int2048 add(int2048 x, const int2048 &y) { return x.add(y); }
 
-int2048 &int2048::operator+=(const int2048 &x) { return add(x); }
-
-int2048 operator+(int2048 x, const int2048 &y) { return x.add(y); }
-
 int2048 &int2048::minus(int2048 x) {
     int flag = 1;
     if (sgn == 1) {
@@ -277,11 +342,7 @@ int2048 &int2048::minus(int2048 x) {
 
 int2048 minus(int2048 x, const int2048 &y) { return x.minus(y); }
 
-int2048 &int2048::operator-=(const int2048 &x) { return minus(x); }
-
-int2048 operator-(int2048 x, const int2048 &y) { return x.minus(y); }
-
-void change(std::vector<complex> &a, int len) {
+void change(std::vector<std::complex<long double> > &a, int len) {
     for (int i = 1, j = len / 2; i < len - 1; i++) {
         if (i < j)
             std::swap(a[i], a[j]);
@@ -295,33 +356,54 @@ void change(std::vector<complex> &a, int len) {
     }
 }
 
-const double Pi = std::acos(-1);
+const int MAXN = 6e6 + 6;
+const long long MOD = 998244353;
+const long long g = 3, gi = 332748118;
+long long r[MAXN];
 
-void FFT(std::vector<complex> &a, int len, int opt) {
-    change(a, len);
-    for (int i = 2; i <= len; i <<= 1) {
-        complex wn(cos(2 * Pi / i), sin(opt * 2 * Pi / i));
-        for (int j = 0; j < len; j += i) {
-            complex w(1, 0);
-            for (int k = j; k < j + i / 2; k++) {
-                complex u = a[k], t = w * a[k + i / 2];
-                a[k] = u + t;
-                a[k + i / 2] = u - t;
-                w = w * wn;
-            }
-        }
+inline long long qpow(long long a, long long k) {
+    long long res = 1LL;
+    while (k) {
+        if (k & 1)
+            res = res * a % MOD;
+        a = a * a % MOD;
+        k >>= 1;
     }
-    if (opt == -1) {
-        for (int i = 0; i < len; i++)
-            a[i].real(a[i].real() / len);
+    return res;
+}
+
+void change(std::vector<long long> &a, int len) {
+    for (int i = 1, j = len / 2; i < len - 1; i++) {
+        if (i < j)
+            std::swap(a[i], a[j]);
+        int k = len / 2;
+        while (j >= k) {
+            j -= k;
+            k >>= 1;
+        }
+        if (j < k)
+            j += k;
     }
 }
 
-std::vector<complex> f, g;
+void NTT(std::vector<long long> &a, int len, int opt) {
+    change(a, len);
+    for (int i = 1; i < len; i <<= 1)
+    {
+        long long gn = qpow(opt ? g : gi, (MOD - 1) / (i << 1));
+        for (int j = 0; j < len; j += (i << 1)) {
+            long long g0 = 1;
+            for (int k = 0; k < i; ++k, g0 = g0 * gn % MOD) {
+                long long x = a[j + k], y = g0 * a[i + j + k] % MOD;
+                a[j + k] = (x + y) % MOD;
+                a[i + j + k] = (x - y + MOD) % MOD;
+            }
+        }
+    }
+}
 
 int2048 &int2048::operator*=(const int2048 &x) {
-    f.clear();
-    g.clear();
+    std::vector<long long> f, g;
     int n = num.size() - 1, m = x.num.size() - 1;
     int res = n + m;
     int k = 1, lg = 0;
@@ -339,15 +421,16 @@ int2048 &int2048::operator*=(const int2048 &x) {
         g[i] = x.num[i];
     for (int i = m + 1; i < k; i++)
         g[i] = 0;
-    FFT(f, k, 1);
-    FFT(g, k, 1);
-    for (int i = 0; i < k; i++)
-        f[i] = f[i] * g[i];
-    FFT(f, k, -1);
+    NTT(f, k, 1);
+    NTT(g, k, 1);
+    for (int i = 0; i <= k; i++)
+        f[i] = f[i] * g[i] % MOD;
+    NTT(f, k, 0);
+    long long inv = qpow(k, MOD - 2);
     num.clear();
-    num.resize(res + 2);
-    for (int i = 0; i <= res; i++) {
-        num[i] += static_cast<long long>(f[i].real() + 0.5);
+    num.resize(n + m + 2);
+    for (int i = 0; i <= n + m; i++) {
+        num[i] += f[i] * inv % MOD;
         if (num[i] >= max_num) {
             num[i + 1] += num[i] / max_num;
             num[i] %= max_num;
@@ -359,60 +442,19 @@ int2048 &int2048::operator*=(const int2048 &x) {
 
 int2048 operator*(int2048 x, const int2048 &y) { return x *= y; }
 
-// void int2048::shift(int len) {
-//     if (len >= 0) {
-//         num.resize(num.size() + len);
-//         for (int i = num.size() - 1; i >= 0; i--)
-//             num[i + len] = num[i];
-//         for (int i = 0; i < len; i++)
-//             num[i] = 0;
-//     } else {
-//         len = -len;
-//         for (int i = 0; i < num.size() - len; i++)
-//             num[i] = num[i + len];
-//         num.resize(num.size() - len);
-//     }
-// }
-
-// int2048 inv(const int2048 &x) {
-//     if (x.num.size() <= 10) {
-//         int2048 y;
-//         y.num.resize(x.num.size() << 1 | 1);
-//         y.num[y.num.size() - 1] = 1;
-
-//     }
-// }
-
-int2048 &int2048::operator/=(const int2048 &x) {
-    int2048 ans;
-    ans.num.resize(num.size());
-    while (*this >= x)
-    {
-        int2048 div = x, divnex = div * max_num_int2048;
-        int cnt = 0;
-        while (*this >= divnex)
-        {
-            div = divnex;
-            divnex *= max_num_int2048;
-            cnt++;
-        }
-        int l = 1, r = max_num - 1, res = 0;
-        while (l <= r) {
-            int mid = (l + r) >> 1;
-            if (div * mid <= *this) {
-                l = mid + 1;
-                res = mid;
-            } else {
-                r = mid - 1;
-            }
-        }
-        ans.num[cnt] = res;
-        *this -= div * res;
-    }
-    ans.reduce();
-    *this = ans;
-    return *this;
-}
-int2048 operator/(int2048 x, const int2048 &y) { return x /= y; }
-
 } // namespace sjtu
+
+using sjtu::int2048;
+using std::cin;
+using std::cout;
+using std::endl;
+
+int main()
+{
+    freopen("P1919_1.in", "r", stdin);
+    freopen("P1919_2.out", "w", stdout);
+    int2048 a, b;
+    cin >> a >> b;
+    cout << a * b << endl;
+    return 0;
+}

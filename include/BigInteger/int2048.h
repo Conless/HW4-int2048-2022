@@ -29,7 +29,6 @@ class int2048 {
     int2048();
     int2048(const int2048 &);
     int2048(const std::string &);
-    int2048(const char *);
     int2048(long long x);
 
   public:
@@ -58,7 +57,7 @@ class int2048 {
     // output the sum of a big int
     friend int2048 add(int2048, const int2048 &);
 
-    int2048 &operator+=(int2048);
+    int2048 &operator+=(const int2048 &);
     friend int2048 operator+(int2048, const int2048 &);
 
     // minus a big int
@@ -66,19 +65,22 @@ class int2048 {
     // output the difference of a big int
     friend int2048 minus(int2048, const int2048 &);
 
-    int2048 &operator-=(int2048);
+    int2048 &operator-=(const int2048 &);
     friend int2048 operator-(int2048, const int2048 &);
 
     
     int2048 &operator*=(const int2048 &);
-    // friend int2048 operator*(int2048, const int2048 &);
+    friend int2048 operator*(int2048, const int2048 &);
 
-    // int2048 &operator/=(const int2048 &);
-    // friend int2048 operator/(int2048, const int2048 &);
+    int2048 &operator/=(const int2048 &);
+    friend int2048 operator/(int2048, const int2048 &);
 
-    
+    // void shift(int);
+    // friend int2048 inv(const int2048 &);
 };
 } // namespace sjtu
+
+
 
 
 #endif
