@@ -91,6 +91,7 @@ namespace sjtu {
 
 const int digit_len = 3;
 const long long digit_mul[] = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
+
 const long long max_num = digit_mul[digit_len];
 const int2048 max_num_int2048 = max_num;
 
