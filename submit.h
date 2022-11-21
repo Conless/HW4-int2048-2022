@@ -92,8 +92,8 @@ namespace sjtu {
 const int digit_len = 3;
 const long long digit_mul[] = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
 
-const long long max_num = digit_mul[digit_len];
-const int2048 max_num_int2048 = max_num;
+const long long kMaximumNum = digit_mul[digit_len];
+const int2048 kMaximumNum_int2048 = kMaximumNum;
 
 #define complex std::complex<double>
 
@@ -137,8 +137,8 @@ int2048::int2048(long long x) {
         sgn = 1;
     }
     while (x) {
-        num.push_back(x % max_num);
-        x /= max_num;
+        num.push_back(x % kMaximumNum);
+        x /= kMaximumNum;
     }
     reduce();
 }
@@ -255,32 +255,32 @@ int2048 &int2048::add(int2048 x) {
     if (len1 > len2) {
         for (int i = 0; i < len2; i++) {
             num[i] += x.num[i];
-            if (num[i] >= max_num) {
-                num[i + 1] += num[i] / max_num;
-                num[i] %= max_num;
+            if (num[i] >= kMaximumNum) {
+                num[i + 1] += num[i] / kMaximumNum;
+                num[i] %= kMaximumNum;
             }
         }
     } else {
         for (int i = 0; i < len1 - 1; i++)
         {
             num[i] += x.num[i];
-            if (num[i] >= max_num) {
-                num[i + 1] += num[i] / max_num;
-                num[i] %= max_num;
+            if (num[i] >= kMaximumNum) {
+                num[i + 1] += num[i] / kMaximumNum;
+                num[i] %= kMaximumNum;
             }
         }
         num[len1 - 1] += x.num[len1 - 1];
-        if (num[len1 - 1] >= max_num) {
-            num.push_back(num[len1 - 1] / max_num);
-            num[len1 - 1] %= max_num;
+        if (num[len1 - 1] >= kMaximumNum) {
+            num.push_back(num[len1 - 1] / kMaximumNum);
+            num[len1 - 1] %= kMaximumNum;
         } else if (len2 > len1)
             num.push_back(0);
         for (int i = len1; i < len2; i++) {
             num[i] += x.num[i];
             num.push_back(0);
-            if (num[i] >= max_num) {
-                num[i + 1] += num[i] / max_num;
-                num[i] %= max_num;
+            if (num[i] >= kMaximumNum) {
+                num[i + 1] += num[i] / kMaximumNum;
+                num[i] %= kMaximumNum;
             }
         }
         if (num.back() == 0)
@@ -334,13 +334,13 @@ int2048 &int2048::minus(int2048 x) {
         num[i] -= x.num[i];
         if (num[i] < 0) {
             num[i + 1]--;
-            num[i] += max_num;
+            num[i] += kMaximumNum;
         }
     }
     for (int i = lenx; i < len; i++) {
         if (num[i] < 0) {
             num[i + 1]--;
-            num[i] += max_num;
+            num[i] += kMaximumNum;
         }
     }
     sgn = flag;
@@ -422,9 +422,9 @@ int2048 &int2048::operator*=(int2048 x) {
     num.resize(res + 2);
     for (int i = 0; i <= res; i++) {
         num[i] += static_cast<long long>(f[i].real() + 0.5);
-        if (num[i] >= max_num) {
-            num[i + 1] += num[i] / max_num;
-            num[i] %= max_num;
+        if (num[i] >= kMaximumNum) {
+            num[i + 1] += num[i] / kMaximumNum;
+            num[i] %= kMaximumNum;
         }
     }
     reduce();
@@ -494,7 +494,7 @@ int2048 int2048::div(int2048 x) {
     st.push(div);
     int cnt = 0;
     while (*this > div) {
-        div *= max_num_int2048;
+        div *= kMaximumNum_int2048;
         st.push(div);
         cnt++;
     }
@@ -504,7 +504,7 @@ int2048 int2048::div(int2048 x) {
             cnt--;
         }
         div = st.top();
-        int l = 1, r = max_num - 1, res = 0;
+        int l = 1, r = kMaximumNum - 1, res = 0;
         while (l <= r) {
             int mid = (l + r) >> 1;
             if (div * mid <= *this) {

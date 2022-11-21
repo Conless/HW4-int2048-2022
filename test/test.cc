@@ -9,7 +9,11 @@ int main(int argc, char **argv) {
 }
 
 TEST(SuiteName, TestName1) {
-    sjtu::int2048 a, b;
+    sjtu::int2048 a, b, c;
+    freopen("test/P1919_1.in", "r", stdin);
     cin >> a >> b;
-    cout << a / b << endl;
+    cin.clear();
+    freopen("test/P1919_1.out", "r", stdin);
+    cin >> c;
+    EXPECT_EQ(a * b, c);
 }
