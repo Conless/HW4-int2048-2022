@@ -11,8 +11,8 @@
 #include <complex>
 #include <cstdio>
 #include <cstring>
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <vector>
 
 // 请不要使用 using namespace std;
@@ -53,12 +53,68 @@ class int2048 {
     friend bool operator>=(const int2048 &, const int2048 &);
 
     // add a big int
-    int2048 &add(int2048);
-    // output the sum of a big int
-    friend int2048 add(int2048, const int2048 &);
+    int2048 &add(int2048 x) {
+        int flag = 1;
+        if (sgn == 1) {
+            if (x.sgn == -1) {
+                x.sgn = 1;
+                minus(x);
+                return *this;
+            }
+        } else {
+            if (x.sgn == 1) {
+                x.minus(abs(*this));
+                *this = x;
+                return *this;
+            } else {
+                sgn = x.sgn = 1;
+                flag = -1;
+            }
+        }
+        int len1 = num.size(), len2 = x.num.size();
+        if (len1 > len2) {
+            for (int i = 0; i < len2; i++) {
+                num[i] += x.num[i];
+                if (num[i] >= 100) {
+                    num[i + 1] += num[i] / 100;
+                    num[i] %= 100;
+                }
+            }
+        } else {
+            for (int i = 0; i < len1 - 1; i++) {
+                num[i] += x.num[i];
+                if (num[i] >= 100) {
+                    num[i + 1] += num[i] / 100;
+                    num[i] %= 100;
+                }
+            }
+            num[len1 - 1] += x.num[len1 - 1];
+            if (num[len1 - 1] >= 100) {
+                num.push_back(num[len1 - 1] / 100);
+                num[len1 - 1] %= 100;
+            } else if (len2 > len1)
+                num.push_back(0);
+            for (int i = len1; i < len2; i++) {
+                num[i] += x.num[i];
+                num.push_back(0);
+                if (num[i] >= 100) {
+                    num[i + 1] += num[i] / 100;
+                    num[i] %= 100;
+                }
+            }
+            if (num.back() == 0)
+                num.pop_back();
+        }
+        sgn = flag;
+        reduce();
+        return *this;
+    }
 
-    int2048 &operator+=(int2048);
-    friend int2048 operator+(int2048, const int2048 &);
+    friend int2048 addd(int2048 x, const int2048 &y) { return x.add(y); }
+
+    int2048 operator+=(int2048 x) { return add(x); }
+
+    friend int2048 operator+(int2048 x, const int2048 &y) { return addd(x, y); }
 
     // minus a big int
     int2048 &minus(int2048);
@@ -68,7 +124,6 @@ class int2048 {
     int2048 &operator-=(int2048);
     friend int2048 operator-(int2048, const int2048 &);
 
-    
     int2048 &operator*=(int2048);
     friend int2048 operator*(int2048, const int2048 &);
 
@@ -80,9 +135,6 @@ class int2048 {
     friend int2048 inv(int2048);
 };
 } // namespace sjtu
-
-
-
 
 #endif
 #include <stack>
@@ -96,6 +148,8 @@ const long long kMaximumNum = digit_mul[digit_len];
 const int2048 kMaximumNum_int2048 = kMaximumNum;
 
 #define complex std::complex<double>
+
+
 
 int2048::int2048() {
     sgn = 1;
@@ -232,70 +286,6 @@ bool operator>(const int2048 &x, const int2048 &y) {
 }
 bool operator<=(const int2048 &x, const int2048 &y) { return (x > y) ^ 1; }
 bool operator>=(const int2048 &x, const int2048 &y) { return (x < y) ^ 1; }
-
-int2048 &int2048::add(int2048 x) {
-    int flag = 1;
-    if (sgn == 1) {
-        if (x.sgn == -1) {
-            x.sgn = 1;
-            minus(x);
-            return *this;
-        }
-    } else {
-        if (x.sgn == 1) {
-            x.minus(abs(*this));
-            *this = x;
-            return *this;
-        } else {
-            sgn = x.sgn = 1;
-            flag = -1;
-        }
-    }
-    int len1 = num.size(), len2 = x.num.size();
-    if (len1 > len2) {
-        for (int i = 0; i < len2; i++) {
-            num[i] += x.num[i];
-            if (num[i] >= kMaximumNum) {
-                num[i + 1] += num[i] / kMaximumNum;
-                num[i] %= kMaximumNum;
-            }
-        }
-    } else {
-        for (int i = 0; i < len1 - 1; i++)
-        {
-            num[i] += x.num[i];
-            if (num[i] >= kMaximumNum) {
-                num[i + 1] += num[i] / kMaximumNum;
-                num[i] %= kMaximumNum;
-            }
-        }
-        num[len1 - 1] += x.num[len1 - 1];
-        if (num[len1 - 1] >= kMaximumNum) {
-            num.push_back(num[len1 - 1] / kMaximumNum);
-            num[len1 - 1] %= kMaximumNum;
-        } else if (len2 > len1)
-            num.push_back(0);
-        for (int i = len1; i < len2; i++) {
-            num[i] += x.num[i];
-            num.push_back(0);
-            if (num[i] >= kMaximumNum) {
-                num[i + 1] += num[i] / kMaximumNum;
-                num[i] %= kMaximumNum;
-            }
-        }
-        if (num.back() == 0)
-            num.pop_back();
-    }
-    sgn = flag;
-    reduce();
-    return *this;
-}
-
-int2048 add(int2048 x, const int2048 &y) { return x.add(y); }
-
-int2048 &int2048::operator+=(int2048 x) { return add(x); }
-
-int2048 operator+(int2048 x, const int2048 &y) { return x.add(y); }
 
 int2048 &int2048::minus(int2048 x) {
     int flag = 1;
