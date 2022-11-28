@@ -68,6 +68,7 @@ class int2048 {
     friend std::istream &operator>>(std::istream &, int2048 &);
     friend std::ostream &operator<<(std::ostream &, const int2048 &);
 
+  private:
     /**
      * @brief To simplify a int2048 number
      * @details Deleting the suffix zero or resize the num vector. It's suggested to use this function after every operation, in
@@ -105,9 +106,9 @@ class int2048 {
      */
     friend int2048 add(int2048, const int2048 &);
     int2048 &operator+=(int2048);
-    int2048 &operator++();
-    int2048 &operator++(int);
     friend int2048 operator+(int2048, const int2048 &);
+    int2048 &operator++();
+    int2048 operator++(int);
 
     /**
      * @brief The self subtraction function of int2048
@@ -121,9 +122,9 @@ class int2048 {
      */
     friend int2048 minus(int2048, const int2048 &);
     int2048 &operator-=(int2048);
-    int2048 &operator--();
-    int2048 &operator--(int);
     friend int2048 operator-(int2048, const int2048 &);
+    int2048 &operator--();
+    int2048 operator--(int);
 
     /**
      * @brief The self multiplication function of int2048
@@ -149,8 +150,6 @@ class int2048 {
   public:
     int2048 &operator/=(int2048);
     friend int2048 operator/(int2048, const int2048 &);
-
-    void haha();
 };
 
 } // namespace sjtu
