@@ -1,5 +1,5 @@
 /**
- * @file int2048.cc
+ * @file int2048.cpp
  * @author Conless
  * @brief The implementation of int2048.h
  * @version 0.1
@@ -17,7 +17,7 @@ const int kDigitLen = 3;
 const long long kDigit[] = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
 
 const long long kMaximumNum = kDigit[kDigitLen];
-const int2048 kMaximumNum_int2048 = kMaximumNum;
+const int2048 kMaximumNum_int2048 = int2048(kMaximumNum);
 
 int2048::int2048() {
     sgn = 1;
@@ -84,7 +84,7 @@ void int2048::print() const {
 std::istream &operator>>(std::istream &in, int2048 &input_num) {
     std::string input_str;
     in >> input_str;
-    input_num = input_str;
+    input_num = int2048(input_str);
     return in;
 }
 
@@ -156,28 +156,29 @@ bool operator>(const int2048 &num_left, const int2048 &num_right) {
 bool operator<=(const int2048 &x, const int2048 &y) { return (x > y) ^ 1; }
 bool operator>=(const int2048 &x, const int2048 &y) { return (x < y) ^ 1; }
 
-int2048 &int2048::add(int2048 num_right) {
+int2048 &int2048::add(const int2048 &num_right) {
     int flag = 1;
+    int2048 num_right_copy = num_right;
     if (sgn == 1) {
-        if (num_right.sgn == -1) {
-            num_right.sgn = 1;
-            minus(num_right);
+        if (num_right_copy.sgn == -1) {
+            num_right_copy.sgn = 1;
+            minus(num_right_copy);
             return *this;
         }
     } else {
-        if (num_right.sgn == 1) {
-            num_right.minus(abs(*this));
-            *this = num_right;
+        if (num_right_copy.sgn == 1) {
+            num_right_copy.minus(abs(*this));
+            *this = num_right_copy;
             return *this;
         } else {
-            sgn = num_right.sgn = 1;
+            sgn = num_right_copy.sgn = 1;
             flag = -1;
         }
     }
-    int len_left = num.size(), len_right = num_right.num.size();
+    int len_left = num.size(), len_right = num_right_copy.num.size();
     if (len_left > len_right) {
         for (int i = 0; i < len_right; i++) {
-            num[i] += num_right.num[i];
+            num[i] += num_right_copy.num[i];
             if (num[i] >= kMaximumNum) {
                 num[i + 1] += num[i] / kMaximumNum;
                 num[i] %= kMaximumNum;
@@ -185,20 +186,20 @@ int2048 &int2048::add(int2048 num_right) {
         }
     } else {
         for (int i = 0; i < len_left - 1; i++) {
-            num[i] += num_right.num[i];
+            num[i] += num_right_copy.num[i];
             if (num[i] >= kMaximumNum) {
                 num[i + 1] += num[i] / kMaximumNum;
                 num[i] %= kMaximumNum;
             }
         }
-        num[len_left - 1] += num_right.num[len_left - 1];
+        num[len_left - 1] += num_right_copy.num[len_left - 1];
         if (num[len_left - 1] >= kMaximumNum) {
             num.push_back(num[len_left - 1] / kMaximumNum);
             num[len_left - 1] %= kMaximumNum;
         } else if (len_right > len_left)
             num.push_back(0);
         for (int i = len_left; i < len_right; i++) {
-            num[i] += num_right.num[i];
+            num[i] += num_right_copy.num[i];
             num.push_back(0);
             if (num[i] >= kMaximumNum) {
                 num[i + 1] += num[i] / kMaximumNum;
@@ -213,47 +214,52 @@ int2048 &int2048::add(int2048 num_right) {
     return *this;
 }
 
-int2048 add(int2048 num_left, const int2048 &num_right) { return num_left.add(num_right); }
-int2048 &int2048::operator+=(int2048 num_right) { return add(num_right); }
-int2048 operator+(int2048 num_left, const int2048 &num_right) { return num_left.add(num_right); }
-int2048 &int2048::operator++() { return add(1); }
-int2048 int2048::operator++(int) { return (add(1) - 1); }
+int2048 add(const int2048 &num_left, const int2048 &num_right) {
+    int2048 num_left_copy = num_left;
+    return num_left_copy.add(num_right);
+}
 
-int2048 &int2048::minus(int2048 num_right) {
+int2048 &int2048::operator+=(const int2048 &num_right) { return add(num_right); }
+int2048 operator+(const int2048 &num_left, const int2048 &num_right) { return add(num_left, num_right); }
+int2048 &int2048::operator++() { return add(int2048(1)); }
+int2048 int2048::operator++(int) { return (add(int2048(1)) - int2048(1)); }
+
+int2048 &int2048::minus(const int2048 &num_right) {
     int flag = 1;
+    int2048 num_right_copy = num_right;
     if (sgn == 1) {
-        if (num_right.sgn == 1) {
-            if (*this < num_right) {
-                int2048 res = num_right.minus(*this);
+        if (num_right_copy.sgn == 1) {
+            if (*this < num_right_copy) {
+                int2048 res = num_right_copy.minus(*this);
                 res.sgn = -1;
                 *this = res;
                 return *this;
             }
         } else {
-            num_right.sgn = 1;
-            add(num_right);
+            num_right_copy.sgn = 1;
+            add(num_right_copy);
             return *this;
         }
     } else {
-        if (num_right.sgn == 1) {
-            num_right.sgn = -1;
-            add(num_right);
+        if (num_right_copy.sgn == 1) {
+            num_right_copy.sgn = -1;
+            add(num_right_copy);
             return *this;
         } else {
-            if (abs(*this) < abs(num_right)) {
-                sgn = num_right.sgn = 1;
-                num_right.minus(*this);
-                *this = num_right;
+            if (abs(*this) < abs(num_right_copy)) {
+                sgn = num_right_copy.sgn = 1;
+                num_right_copy.minus(*this);
+                *this = num_right_copy;
                 return *this;
             } else {
-                sgn = num_right.sgn = 1;
+                sgn = num_right_copy.sgn = 1;
                 flag = -1;
             }
         }
     }
-    int len_left = num.size(), len_right = num_right.num.size();
+    int len_left = num.size(), len_right = num_right_copy.num.size();
     for (int i = 0; i < len_right; i++) {
-        num[i] -= num_right.num[i];
+        num[i] -= num_right_copy.num[i];
         if (num[i] < 0) {
             num[i + 1]--;
             num[i] += kMaximumNum;
@@ -270,11 +276,15 @@ int2048 &int2048::minus(int2048 num_right) {
     return *this;
 }
 
-int2048 minus(int2048 num_left, const int2048 &num_right) { return num_left.minus(num_right); }
-int2048 &int2048::operator-=(int2048 num_right) { return minus(num_right); }
-int2048 operator-(int2048 num_left, const int2048 &num_right) { return num_left.minus(num_right); }
-int2048 &int2048::operator--() { return minus(1); }
-int2048 int2048::operator--(int) { return (minus(1) + 1); }
+int2048 minus(const int2048 &num_left, const int2048 &num_right) {
+    int2048 num_left_copy = num_left;
+    return num_left_copy.minus(num_right);
+}
+
+int2048 &int2048::operator-=(const int2048 &num_right) { return minus(num_right); }
+int2048 operator-(const int2048 &num_left, const int2048 &num_right) { return minus(num_left, num_right); }
+int2048 &int2048::operator--() { return minus(int2048(1)); }
+int2048 int2048::operator--(int) { return (minus(int2048(1)) + int2048(1)); }
 
 } // namespace sjtu
 
@@ -357,7 +367,7 @@ std::vector<long long> mul(const std::vector<long long> &num_left, const std::ve
 
 namespace sjtu {
 
-int2048 &int2048::operator*=(int2048 num_right) {
+int2048 &int2048::operator*=(const int2048 &num_right) {
     sgn *= num_right.sgn;
     num = fft::mul(num, num_right.num);
     int len = num.size() - 1;
@@ -371,11 +381,14 @@ int2048 &int2048::operator*=(int2048 num_right) {
     return *this;
 }
 
-int2048 operator*(int2048 num_left, const int2048 &num_right) { return num_left *= num_right; }
+int2048 operator*(const int2048 &num_left, const int2048 &num_right) {
+    int2048 num_left_copy = num_left;
+    return num_left_copy *= num_right;
+}
 
 void modify(const sjtu::int2048 &num_dividend, const sjtu::int2048 &num_divisor, sjtu::int2048 &num_res) {
     sjtu::int2048 rem = num_dividend - num_res * num_divisor;
-    if (rem > num_divisor)
+    if (rem >= num_divisor)
         num_res++;
     return;
 }
@@ -400,7 +413,7 @@ void int2048::move_digit(int len) {
     reduce();
 }
 
-int2048 int2048::inv() {
+int2048 int2048::inv() const {
     if (num.size() <= 10) {
         int2048 res;
         int siz = num.size() << 1 | 1;
@@ -418,9 +431,9 @@ int2048 int2048::inv() {
         inv_pre = pre.inv();
         int2048 part1 = *this * inv_pre * inv_pre;
         part1.move_digit(-2 * pre_len);
-        int2048 part2 = 2 * inv_pre;
+        int2048 part2 = int2048(2) * inv_pre;
         part2.move_digit(len - pre_len);
-        int2048 res = part1 - part2 - 1;
+        int2048 res = part2 - part1 - int2048(1);
         int2048 num_one;
         num_one.num.clear();
         num_one.num.resize(len << 1 | 1);
@@ -431,7 +444,7 @@ int2048 int2048::inv() {
     }
 }
 
-int2048 int2048::div(int2048 num_right) {
+int2048 int2048::div(const int2048 &num_right) {
     int2048 ans, num_divisor = num_right;
     ans.sgn = sgn * num_right.sgn;
     ans.num.clear();
@@ -444,7 +457,7 @@ int2048 int2048::div(int2048 num_right) {
         st.push(num_divisor);
         cnt_digit++;
     }
-    while (*this >= num_divisor) {
+    while (*this >= num_right) {
         while (st.top() > *this) {
             st.pop();
             cnt_digit--;
@@ -453,7 +466,7 @@ int2048 int2048::div(int2048 num_right) {
         int l = 1, r = kMaximumNum - 1, res = 0;
         while (l <= r) {
             int mid = (l + r) >> 1;
-            if (num_divisor * mid <= *this) {
+            if (num_divisor * int2048(mid) <= *this) {
                 l = mid + 1;
                 res = mid;
             } else {
@@ -461,32 +474,35 @@ int2048 int2048::div(int2048 num_right) {
             }
         }
         ans.num[cnt_digit] = res;
-        *this -= num_divisor * res;
+        *this -= num_divisor * int2048(res);
     }
     ans.reduce();
     *this = ans;
     return *this;
 }
 
-int2048 &int2048::operator/=(int2048 num_right) {
+int2048 &int2048::operator/=(const int2048 &num_right) {
     if (*this < num_right)
-        return *this = 0;
-    int2048 num_left = *this;
-    int len_left = num_left.num.size(), len_right = num_right.num.size();
+        return *this = int2048(0);
+    int2048 num_left = *this, num_right_copy = num_right;
+    int len_left = num_left.num.size(), len_right = num_right_copy.num.size();
     if (len_left > len_right * 2) {
         int len_move = len_left - len_right * 2;
         num_left.move_digit(len_move);
-        num_right.move_digit(len_move);
+        num_right_copy.move_digit(len_move);
         len_right += len_move;
         len_left -= len_move;
     }
-    int2048 inv_num_right = num_right.inv();
-    int2048 res = len_left * inv_num_right;
+    int2048 inv_num_right = num_right_copy.inv();
+    int2048 res = num_left * inv_num_right;
     res.move_digit(-(len_right * 2));
     modify(*this, num_right, res);
     res.reduce();
     return *this = res;
 }
-int2048 operator/(int2048 num_left, const int2048 &num_right) { return num_left /= num_right; }
+int2048 operator/(const int2048 &num_left, const int2048 &num_right) {
+    int2048 num_left_copy = num_left;
+    return num_left_copy /= num_right;
+}
 
 } // namespace sjtu

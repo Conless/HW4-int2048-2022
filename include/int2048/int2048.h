@@ -98,15 +98,15 @@ class int2048 {
      * @details It contains the main operation of the addition of int2048, which costs O(n) time
      * @return int2048& (Editing the result of self-add is equivalent to editing the left value of self-add)
      */
-    int2048 &add(int2048);
+    int2048 &add(const int2048 &);
 
     /**
      * @brief The addition function of int2048
      * @return int2048(&)
      */
-    friend int2048 add(int2048, const int2048 &);
-    int2048 &operator+=(int2048);
-    friend int2048 operator+(int2048, const int2048 &);
+    friend int2048 add(const int2048 &, const int2048 &);
+    int2048 &operator+=(const int2048 &);
+    friend int2048 operator+(const int2048 &, const int2048 &);
     int2048 &operator++();
     int2048 operator++(int);
 
@@ -115,14 +115,14 @@ class int2048 {
      * @details It contains the main operation of the subtraction of int2048, which costs O(n) time
      * @return int2048& (Editing the result of self-minus is equivalent to editing the left value of self-minus)
      */
-    int2048 &minus(int2048);
+    int2048 &minus(const int2048 &);
     /**
      * @brief The subtracting function of int2048
      * @return int2048(&)
      */
-    friend int2048 minus(int2048, const int2048 &);
-    int2048 &operator-=(int2048);
-    friend int2048 operator-(int2048, const int2048 &);
+    friend int2048 minus(const int2048 &, const int2048 &);
+    int2048 &operator-=(const int2048 &);
+    friend int2048 operator-(const int2048 &, const int2048 &);
     int2048 &operator--();
     int2048 operator--(int);
 
@@ -131,8 +131,8 @@ class int2048 {
      * @details It contains the main operation of the multiplication of int2048, which costs O(nlogn) time
      * @return int2048& (Editing the result of self-mul is equivalent to editing the left value of self-mul)
      */
-    int2048 &operator*=(int2048);
-    friend int2048 operator*(int2048, const int2048 &);
+    int2048 &operator*=(const int2048 &);
+    friend int2048 operator*(const int2048 &, const int2048 &);
 
     /**
      * @brief Some tools using in the division of int2048
@@ -140,16 +140,16 @@ class int2048 {
      */
   private:
     void move_digit(int);
-    int2048 div(int2048);
-    int2048 inv();
+    int2048 div(const int2048 &);
+    int2048 inv() const;
     /**
      * @brief The self division function of int2048
      * @details It contains the main operation of the division of int2048, which costs O(nlogn) time
      * @return int2048& (Editing the result of self-div is equivalent to editing the left value of self-div)
      */
   public:
-    int2048 &operator/=(int2048);
-    friend int2048 operator/(int2048, const int2048 &);
+    int2048 &operator/=(const int2048 &);
+    friend int2048 operator/(const int2048 &, const int2048 &);
 };
 
 } // namespace sjtu

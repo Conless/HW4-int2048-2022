@@ -1,1 +1,8 @@
 mkdir build/
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /mnt/d/OneDrive/cs/course/22fall/sjtu/cs1953/project/HW4-int2048-2022/build
+Consolidate compiler generated dependencies of target int2048_run
+[ 33%] Building CXX object src/CMakeFiles/int2048_run.dir/main.cpp.o
+[ 66%] Linking CXX executable ../../bin/int2048_run
+[100%] Built target int2048_run
