@@ -11,8 +11,7 @@ Time Limit: 3.00s
 sjtu::int2048 a, b;
 std::string s1, s2;
 
-int main()
-{
+int main() {
     for (int i = 1; i <= 10; i++)
     {
         a = 0, b = 0;
